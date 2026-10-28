@@ -1,0 +1,84 @@
+name: New Security Rule Request
+description: Suggest a new security or anti-pattern rule to be added to TreeGuard's standard rule set
+title: "[Rule]: "
+labels: ["rule-request", "rules"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        TreeGuard welcomes contributions for new static analysis rules across our supported languages!
+        Please fill out this form with code examples to help maintainers assess and implement the rule.
+  - type: dropdown
+    id: language
+    attributes:
+      label: Target Language
+      description: Which language does this rule target?
+      options:
+        - C / C++
+        - Dockerfile / Containerfile
+        - Go
+        - Java
+        - JavaScript / TypeScript / TSX
+        - JSON
+        - PHP
+        - Python
+        - Ruby
+        - Rust
+    validations:
+      required: true
+  - type: input
+    id: rule_name
+    attributes:
+      label: Proposed Rule ID / Name
+      placeholder: "e.g., python/sql_injection or dockerfile/missing_user"
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Proposed Severity
+      options:
+        - CRITICAL
+        - HIGH
+        - MEDIUM
+        - LOW
+        - INFO
+    validations:
+      required: true
+  - type: input
+    id: cwe_owasp
+    attributes:
+      label: Related CWE or OWASP Category
+      placeholder: "e.g., CWE-89 (SQL Injection) or OWASP A03:2021-Injection"
+    validations:
+      required: false
+  - type: textarea
+    id: description
+    attributes:
+      label: Rule Description
+      description: Explain what vulnerability, security anti-pattern, or misconfiguration this rule detects and why it is hazardous.
+    validations:
+      required: true
+  - type: textarea
+    id: vulnerable_example
+    attributes:
+      label: Vulnerable Code Example (True Positive)
+      description: Provide a minimal snippet that this rule SHOULD flag.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: safe_example
+    attributes:
+      label: Safe Code Example (False Positive Prevention)
+      description: Provide a snippet showing safe/remediated code that this rule should NOT flag.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: references
+    attributes:
+      label: References & Documentation
+      description: Links to documentation, CVEs, or security write-ups describing the flaw.
+    validations:
+      required: false

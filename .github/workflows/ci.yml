@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: 'go.mod'
+          cache: true
+
+      - name: Build TreeGuard Binary
+        run: |
+          CGO_ENABLED=1 go build -v -o treeguard ./cmd/treeguard
+
+      - name: Run Unit Tests (with Race Detection)
+        run: |
+          CGO_ENABLED=1 go test -v -race -covermode=atomic -coverprofile=coverage.txt ./...
+
+      - name: Validate Rego Security Rules
+        run: |
+          ./treeguard validate rules/
+
+      - name: Run Rule Fixture Tests
+        run: |
+          ./treeguard test test/fixtures
+
+      - name: Upload Test Coverage
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage-report
+          path: coverage.txt
+
+  docker-build:
+    name: Build Docker Container
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Test Image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false
+          tags: treeguard:test
+

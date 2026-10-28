@@ -1,0 +1,72 @@
+{
+  "name": "treeguard-vscode",
+  "displayName": "TreeGuard SAST Security Scanner",
+  "description": "High-performance static application security testing (SAST) powered by Tree-sitter and OPA Rego",
+  "version": "1.0.0",
+  "publisher": "treeguard",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Linters",
+    "Security"
+  ],
+  "activationEvents": [
+    "onLanguage:python",
+    "onLanguage:go",
+    "onLanguage:javascript",
+    "onLanguage:typescript",
+    "onLanguage:c",
+    "onLanguage:cpp",
+    "onCommand:treeguard.scan",
+    "onCommand:treeguard.scanActiveFile"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "treeguard.scan",
+        "title": "TreeGuard: Scan Active Workspace"
+      },
+      {
+        "command": "treeguard.scanActiveFile",
+        "title": "TreeGuard: Scan Active File"
+      }
+    ],
+    "configuration": {
+      "title": "TreeGuard",
+      "properties": {
+        "treeguard.executablePath": {
+          "type": "string",
+          "default": "treeguard",
+          "description": "Path to the treeguard executable binary"
+        },
+        "treeguard.rulesPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to custom Rego rules directory or pack alias"
+        },
+        "treeguard.scanOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically run TreeGuard security scan on file save"
+        },
+        "treeguard.scanOnOpen": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically run TreeGuard security scan when opening supported files"
+        },
+        "treeguard.severityThreshold": {
+          "type": "string",
+          "enum": [
+            "INFO",
+            "WARNING",
+            "ERROR"
+          ],
+          "default": "INFO",
+          "description": "Minimum severity threshold for displaying security diagnostics"
+        }
+      }
+    }
+  }
+}

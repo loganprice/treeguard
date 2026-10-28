@@ -1,0 +1,103 @@
+name: Bug Report
+description: Report a reproducible bug or unexpected behavior in TreeGuard
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report an issue!
+        Please ensure you are using the latest version of TreeGuard before filing a bug report.
+        If you are reporting a security vulnerability, please refer to our [Security Policy](https://github.com/loganprice/treeguard/security/policy).
+  - type: input
+    id: version
+    attributes:
+      label: TreeGuard Version
+      description: What version of TreeGuard are you running? (Run `treeguard version` or check commit hash).
+      placeholder: "e.g., v0.1.0 or commit abc1234"
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating System & Architecture
+      description: Which operating system and CPU architecture are you using?
+      options:
+        - macOS (Apple Silicon / arm64)
+        - macOS (Intel / x86_64)
+        - Linux (x86_64)
+        - Linux (arm64)
+        - Windows (via WSL2)
+        - Other (specify in description)
+    validations:
+      required: true
+  - type: dropdown
+    id: language
+    attributes:
+      label: Affected Language / Component
+      description: If this issue involves parsing or scanning specific files, select the primary language.
+      options:
+        - General / CLI
+        - Rego Engine / OPA
+        - C / C++
+        - Dockerfile / Containerfile
+        - Go
+        - Java
+        - JavaScript / TypeScript / TSX
+        - JSON
+        - PHP
+        - Python
+        - Ruby
+        - Rust
+        - Rule Packing / Registry
+    validations:
+      required: false
+  - type: textarea
+    id: description
+    attributes:
+      label: Description of the Bug
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Exact steps to reproduce the issue.
+      placeholder: |
+        1. Run `treeguard scan --rules rules/ ...`
+        2. Inspect output
+    validations:
+      required: true
+  - type: textarea
+    id: reproducer
+    attributes:
+      label: Minimal Reproducible Example
+      description: Provide a minimal source code snippet or rule file that triggers the bug.
+      render: text
+    validations:
+      required: false
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior & Logs
+      description: What happened instead? Include terminal output or stack traces if available.
+      render: shell
+    validations:
+      required: true
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Confirmation
+      options:
+        - label: I have searched existing issues to ensure this is not a duplicate.
+          required: true
+        - label: This issue does not contain sensitive or proprietary code.
+          required: true

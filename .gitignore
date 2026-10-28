@@ -1,0 +1,28 @@
+# Binaries
+/treeguard
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test artifacts & generated reports
+*.test
+*.out
+coverage.html
+audit-report.html
+coverage.txt
+*.sarif
+
+# macOS & OS artifacts
+.DS_Store
+Thumbs.db
+
+# Editor artifacts (VSCode extension in repo is in editors/vscode)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.idea/
+*.swp
+*~
